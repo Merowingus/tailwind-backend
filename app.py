@@ -1,44 +1,44 @@
 from flask import Flask, request, jsonify
+from pymongo import MongoClient
+import os
 
+# Your MongoDB Atlas connection string.
+# It's a best practice to use an environment variable for this in production.
+# For now, you can paste the full string here.
+MONGO_URI = "mongodb+srv://<username>:<password>@cluster0.abcde.mongodb.net/?retryWrites=true&w=majority"
+
+# Initialize the Flask app
 app = Flask(__name__)
 
-# This is a simple GET endpoint to confirm the server is running.
+# Connect to MongoDB
+client = MongoClient(MONGO_URI)
+db = client.tailwind  # "tailwind" is the name of your database
+events_collection = db.events  # "events" is the name of your collection
+
 @app.route('/')
 def hello_world():
-    return 'Welcome to Tailwind Backend1!'
+    return 'Welcome to Tailwind Backend 2!'
 
-# This is the new POST endpoint for your API.
 @app.route('/api/v1/events', methods=['POST'])
 def receive_event():
-    # 1. Get the JSON data from the incoming request.
     data = request.json
-
-    # 2. Check if data was actually sent.
     if not data:
-        # Return an error message if the JSON is missing.
         return jsonify({"error": "Missing JSON data"}), 400
 
-    # 3. Process the data (for now, we'll just print it).
-    # In the next step, you will save this data to a database.
     try:
-        driver_id = data.get('driverId')
-        event_type = data.get('eventType')
-        metadata = data.get('metadata')
+        # Insert the received event data into the 'events' collection
+        # MongoDB will automatically add a unique "_id" to each document
+        events_collection.insert_one(data)
 
-        print(f"Received event from driver {driver_id}: {event_type}")
-        print(f"Metadata: {metadata}")
+        print(f"Received and saved event from driver {data.get('driverId')}")
 
-        # 4. Return a success response.
         return jsonify({
             "status": "success",
-            "message": "Event received successfully",
-            "data": data
+            "message": "Event received and stored successfully"
         }), 200
-        
+
     except Exception as e:
-        # Handle any errors during processing.
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    # Make sure to run the app in debug mode during development.
     app.run(debug=True)
