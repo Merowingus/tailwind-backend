@@ -5,7 +5,7 @@ import os
 # Your MongoDB Atlas connection string.
 # It's a best practice to use an environment variable for this in production.
 # For now, you can paste the full string here.
-MONGO_URI = "mongodb+srv://worker81:DuNdgtfKM3s9tmEE@tailwind-backend-db.mzqwvbv.mongodb.net/?retryWrites=true&w=majority&appName=tailwind-backend-db"
+MONGO_URI = os.environ.get("MONGO_URI")
 
 # Initialize the Flask app
 app = Flask(__name__)
@@ -17,7 +17,7 @@ events_collection = db.events  # "events" is the name of your collection
 
 @app.route('/')
 def hello_world():
-    return 'Welcome to Tailwind Backend 3!'
+    return 'Welcome to Tailwind Backend 4!'
 
 @app.route('/api/v1/events', methods=['POST'])
 def receive_event():
