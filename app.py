@@ -17,7 +17,7 @@ events_collection = db.events  # "events" is the name of your collection
 
 @app.route('/')
 def hello_world():
-    return 'Welcome to Tailwind Backend 2!'
+    return 'Welcome to Tailwind Backend 3!'
 
 @app.route('/api/v1/events', methods=['POST'])
 def receive_event():
