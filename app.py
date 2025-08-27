@@ -5,7 +5,7 @@ import os
 # Your MongoDB Atlas connection string.
 # It's a best practice to use an environment variable for this in production.
 # For now, you can paste the full string here.
-MONGO_URI = "mongodb+srv://<worker81>:<LIM5IDafWreRvWGs>@tailwind-backend-db.mzqwvbv.mongodb.net/?retryWrites=true&w=majority&appName=tailwind-backend-dbgit "
+MONGO_URI = "mongodb+srv://worker81:test12345678@tailwind-backend-db.mzqwvbv.mongodb.net/?retryWrites=true&w=majority&appName=tailwind-backend-db"
 
 # Initialize the Flask app
 app = Flask(__name__)
